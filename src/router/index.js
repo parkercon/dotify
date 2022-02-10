@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Songs from '../views/Songs.vue'
+import Users from '../views/Users.vue'
+import Playlists from '../views/Playlists.vue'
+import Artists from '../views/Artists.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +26,21 @@ const routes = [
     path: '/songs',
     name: 'Songs',
     component: Songs
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users
+  },
+  {
+    path: '/Playlists',
+    name: 'playlists',
+    component: Playlists
+  },
+  {
+    path: '/Artists',
+    name: 'Artists',
+    component: Artists
   }
 ]
 
