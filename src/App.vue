@@ -9,10 +9,10 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-nav-item href="#">Users</b-nav-item>
-            <b-nav-item href="#">Playlists</b-nav-item>
+            <b-nav-item href="/users">Users</b-nav-item>
+            <b-nav-item href="/playlists">Playlists</b-nav-item>
             <b-nav-item href="/songs">Songs</b-nav-item>
-            <b-nav-item href="#">Artists</b-nav-item>
+            <b-nav-item href="/artists">Artists</b-nav-item>
             <b-nav-item-dropdown text="M:M Relationships" right>
               <b-dropdown-item href="#">Playlists & Songs</b-dropdown-item>
               <b-dropdown-item href="#">Artists & Songs</b-dropdown-item>
