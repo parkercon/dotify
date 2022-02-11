@@ -12,7 +12,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/dotify',
+    path: '/', 
+    redirect: { name: 'Home' }
+  },
+  {
+    path: '/dotify/',
     name: 'Home',
     component: Home
   },
