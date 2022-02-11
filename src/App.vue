@@ -14,8 +14,8 @@
             <b-nav-item href="/songs">Songs</b-nav-item>
             <b-nav-item href="/artists">Artists</b-nav-item>
             <b-nav-item-dropdown text="M:M Relationships" right>
-              <b-dropdown-item href="#">Playlists & Songs</b-dropdown-item>
-              <b-dropdown-item href="#">Artists & Songs</b-dropdown-item>
+              <b-dropdown-item href="/playlists&songs">Playlists & Songs</b-dropdown-item>
+              <b-dropdown-item href="/artists&songs">Artists & Songs</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>

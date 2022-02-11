@@ -5,6 +5,8 @@ import Songs from '../views/Songs.vue'
 import Users from '../views/Users.vue'
 import Playlists from '../views/Playlists.vue'
 import Artists from '../views/Artists.vue'
+import PlaylistsAndSongs from '../views/PlaylistsAndSongs.vue'
+import ArtistsAndSongs from '../views/ArtistsAndSongs.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +43,16 @@ const routes = [
     path: '/Artists',
     name: 'Artists',
     component: Artists
+  },
+  {
+    path: '/playlists&songs',
+    name: 'PlaylistsAndSongs',
+    component: PlaylistsAndSongs
+  },
+  {
+    path: '/artists&songs',
+    name: 'ArtistsAndSongs',
+    component: ArtistsAndSongs
   }
 ]
 
