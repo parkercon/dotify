@@ -9,13 +9,13 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-nav-item href="/users">Users</b-nav-item>
-            <b-nav-item href="/playlists">Playlists</b-nav-item>
-            <b-nav-item href="/songs">Songs</b-nav-item>
-            <b-nav-item href="/artists">Artists</b-nav-item>
+            <b-nav-item href="/dotify/users">Users</b-nav-item>
+            <b-nav-item href="/dotify/playlists">Playlists</b-nav-item>
+            <b-nav-item href="/dotify/songs">Songs</b-nav-item>
+            <b-nav-item href="/dotify/artists">Artists</b-nav-item>
             <b-nav-item-dropdown text="M:M Relationships" right>
-              <b-dropdown-item href="/playlists&songs">Playlists & Songs</b-dropdown-item>
-              <b-dropdown-item href="/artists&songs">Artists & Songs</b-dropdown-item>
+              <b-dropdown-item href="/dotify/playlistssongs">Playlists & Songs</b-dropdown-item>
+              <b-dropdown-item href="/dotify/artistssongs">Artists & Songs</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
