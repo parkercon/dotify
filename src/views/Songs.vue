@@ -2,9 +2,9 @@
 <div>
   <b-container style="margin-top: 10%;">
     <b-input-group prepend="Search" class="mb-2">
-      <b-form-input placeholder="Song Name"></b-form-input>
-      <b-form-input type="date"></b-form-input>
-    </b-input-group>
+    <b-form-input placeholder="Song Name"></b-form-input>
+    <b-form-input type="date"></b-form-input>
+  </b-input-group>
   </b-container>
   <b-container class="bv-example-row" style="background-color:floralwhite; outline:solid">
     <b-row style="border-bottom: 1px solid black;">
