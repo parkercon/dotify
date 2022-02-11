@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="/"><b-icon icon="music-note-list"></b-icon> Dotify</b-navbar-brand>
+        <b-navbar-brand><router-link to="/" style="text-decoration: none; color: inherit;"><b-icon icon="music-note-list"></b-icon> Dotify</router-link></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -9,13 +9,13 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-nav-item><router-link to="/dotify/users">Users</router-link></b-nav-item>
-            <b-nav-item href="/dotify/playlists">Playlists</b-nav-item>
-            <b-nav-item href="/dotify/songs">Songs</b-nav-item>
-            <b-nav-item href="/dotify/artists">Artists</b-nav-item>
+            <b-nav-item><router-link to="/users" style="text-decoration: none; color: inherit;">Users</router-link></b-nav-item>
+            <b-nav-item><router-link to="/playlists" style="text-decoration: none; color: inherit;">Playlists</router-link></b-nav-item>
+            <b-nav-item><router-link to="/songs" style="text-decoration: none; color: inherit;">Songs</router-link></b-nav-item>
+            <b-nav-item><router-link to="/artists" style="text-decoration: none; color: inherit;">Artists</router-link></b-nav-item>
             <b-nav-item-dropdown text="M:M Relationships" right>
-              <b-dropdown-item href="/dotify/playlistssongs">Playlists & Songs</b-dropdown-item>
-              <b-dropdown-item href="/dotify/artistssongs">Artists & Songs</b-dropdown-item>
+              <b-dropdown-item><router-link to="/playlistssongs" style="text-decoration: none; color: inherit;">Playlists & Songs</router-link></b-dropdown-item>
+              <b-dropdown-item><router-link to="/artistssongs" style="text-decoration: none; color: inherit;">Artists & Songs</router-link></b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>

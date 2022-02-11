@@ -12,11 +12,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/', 
-    redirect: { name: 'Home' }
-  },
-  {
-    path: '/dotify/',
+    path: '/',
     name: 'Home',
     component: Home
   },
@@ -29,32 +25,32 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/dotify/songs',
+    path: '/songs',
     name: 'Songs',
     component: Songs
   },
   {
-    path: '/dotify/users',
+    path: '/users',
     name: 'Users',
     component: Users
   },
   {
-    path: '/dotify/playlists',
+    path: '/playlists',
     name: 'playlists',
     component: Playlists
   },
   {
-    path: '/dotify/Artists',
+    path: '/Artists',
     name: 'Artists',
     component: Artists
   },
   {
-    path: '/dotify/playlistssongs',
+    path: '/playlistssongs',
     name: 'PlaylistsAndSongs',
     component: PlaylistsAndSongs
   },
   {
-    path: '/dotify/artistssongs',
+    path: '/artistssongs',
     name: 'ArtistsAndSongs',
     component: ArtistsAndSongs
   }
