@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10%">
+<div style="margin-top: 10%; padding-bottom: 15vh">
   <b-container style="margin-top: 10%;">
       <v-selectize v-model="selectedPasswords" :options="passwords" placeholder="Select Passwords" multiple/>
       <v-selectize v-model="selectedfNames" :options="fNames" placeholder="Select First Names" multiple/>

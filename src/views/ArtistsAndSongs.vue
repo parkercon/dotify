@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10%">
+<div style="margin-top: 10%; padding-bottom: 15vh">
     <b-container style="margin-top: 10%;">
       <div>
       <v-selectize v-model="selectedArtists" :options="artistsOnly" placeholder="Select Artist ID" multiple/>

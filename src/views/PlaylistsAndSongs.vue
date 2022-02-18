@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10%">
+<div style="margin-top: 10%; padding-bottom: 15vh">
     <b-container style="margin-top: 10%;">
       <v-selectize v-model="selectedPlaylists" :options="playlists" placeholder="Select Playlist ID" multiple/>
       <v-selectize v-model="selectedSongs" :options="songs" placeholder="Select Song ID" multiple/>
