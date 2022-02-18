@@ -1,12 +1,12 @@
 <template>
 <div style="margin-top: 10%">
-    <b-input-group prepend="Search" class="mb-2">
-      <b-form-input placeholder="Password" type="password"></b-form-input>
-      <b-form-input placeholder="User First Name"></b-form-input>
-      <b-form-input placeholder="User Last Name"></b-form-input>
-      <b-form-input placeholder="User Email" type="email"></b-form-input>
-      <b-form-input type="date"></b-form-input>
-    </b-input-group>
+  <b-container style="margin-top: 10%;">
+      <v-selectize v-model="selectedPasswords" :options="passwords" placeholder="Select Passwords" multiple/>
+      <v-selectize v-model="selectedfNames" :options="fNames" placeholder="Select First Names" multiple/>
+      <v-selectize v-model="selectedlNames" :options="lNames" placeholder="Select Last Names" multiple/>
+      <v-selectize v-model="selectedBirthdays" :options="birthdays" placeholder="Select Birthdays" multiple/>
+      <v-selectize v-model="selectedEmails" :options="emails" placeholder="Select Emails" multiple/>
+  </b-container>
    <b-table striped hover :items="users" :fields="fields">
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
@@ -23,8 +23,23 @@ import mockData from '../data/mockData.json'
 export default {
   name: 'Users',
   setup () {
+    const passwords = mockData.Users.map(u => u.userPassword)
+    const fNames = mockData.Users.map(u => u.userfName)
+    const lNames = mockData.Users.map(u => u.userlName)
+    const birthdays = mockData.Users.map(u => u.userBirthday)
+    const emails = mockData.Users.map(u => u.userEmail)
     return {
       users: mockData.Users,
+      selectedPasswords: [], 
+      selectedfNames: [],
+      selectedlNames: [],
+      selectedBirthdays: [],
+      selectedEmails: [],
+      passwords, 
+      fNames, 
+      lNames, 
+      birthdays, 
+      emails,
       fields: [
         { key: "userId", label: "userId"},
         { key: "userPassword", label: "userPassword" },

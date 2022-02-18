@@ -1,11 +1,9 @@
 <template>
 <div style="margin-top: 10%">
   <b-container style="margin-top: 10%;">
-    <b-input-group prepend="Search" class="mb-2">
-      <b-form-input placeholder="Playlist Name"></b-form-input>
-      <b-form-input placeholder="User Id" type="number"></b-form-input>
-      <b-form-input type="date"></b-form-input>
-    </b-input-group>
+    <v-selectize v-model="selectedNames" :options="playlistNames" placeholder="Select Playlist Name" multiple/>
+    <v-selectize v-model="selectedUserIds" :options="userIds" placeholder="Select User ID" multiple/>
+    <v-selectize v-model="selecteDates" :options="playlistDates" placeholder="Select Playlist Dates" multiple/>
   </b-container>
    <b-table striped hover :items="playlists" :fields="fields">
      <template #cell(edit)="data">
@@ -23,8 +21,17 @@ import mockData from '../data/mockData.json'
 export default {
   name: 'Playlists',
   setup () {
+    const playlistNames = mockData.Playlists.map(p => p.playlistName)
+    const userIds = mockData.Playlists.map(p => p.userId)
+    const playlistDates = mockData.Playlists.map(p => p.playlistDate)
     return {
       playlists: mockData.Playlists,
+      selectedNames: [], 
+      selectedUserIds: [],
+      selecteDates: [],
+      playlistNames, 
+      userIds, 
+      playlistDates,
       fields: [
         { key: "playlistId", label: "playlistId"},
         { key: "playlistName", label: "playlistName" },

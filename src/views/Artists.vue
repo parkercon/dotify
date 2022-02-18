@@ -1,9 +1,7 @@
 <template>
 <div style="margin-top: 10%">
     <b-container style="margin-top: 10%;">
-      <b-input-group prepend="Search" class="mb-2">
-        <b-form-input placeholder="Artist Name"></b-form-input>
-      </b-input-group>
+      <v-selectize v-model="selectedArtists" :options="artistNames" placeholder="Select Artist Name" multiple/>
     </b-container>
    <b-table striped hover :items="artists" :fields="fields">
      <template #cell(edit)="data">
@@ -21,7 +19,10 @@ import mockData from '../data/mockData.json'
 export default {
   name: 'Artists',
   setup () {
+    const artistNames = mockData.Artists.map(a => a.artistName)
     return {
+      selectedArtists: [],
+      artistNames,
       artists: mockData.Artists,
       fields: [
         { key: "artistId", label: "artistId"},

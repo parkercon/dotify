@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@isneezy/vue-selectize": "^0.6.1",
     "@vue/composition-api": "^1.4.6",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.21.2",
@@ -17,7 +18,9 @@
     "mutationobserver-shim": "^0.3.7",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
+    "selectize": "^0.12.6",
     "vue": "^2.6.11",
+    "vue-multiselect": "^2.1.6",
     "vue-property-decorator": "^8.5.1",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
