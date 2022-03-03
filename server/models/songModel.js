@@ -15,7 +15,7 @@ function handleDisconnect() {
 export const getSongs = (result) => {
   db.query("SELECT * FROM songs", (err, results) => {             
       if(err) {
-          console.log(err);
+          console.log('error in songs:', err);
           handleDisconnect()
           result(err, null);
       } else {
