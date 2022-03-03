@@ -5,8 +5,8 @@
   "type": "module",
   "main": "server/index.js",
   "scripts": {
-    "start": "pm2-runtime node server/index.js",
-    "dev": "pm2-runtime nodemon server/index.js"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "keywords": [],
   "author": "",
