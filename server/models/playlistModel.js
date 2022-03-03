@@ -1,8 +1,8 @@
 import db from "../config/database.js"
 
-// Get All Songs
+// Get All Playlists
 export const getSongs = (result) => {
-  db.query("SELECT * FROM songs", (err, results) => {             
+  db.query("SELECT * FROM playlists", (err, results) => {             
       if(err) {
           console.log(err);
           result(err, null);

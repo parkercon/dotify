@@ -22,18 +22,18 @@ export default {
   name: 'Artists',
   setup () {
     const artistNames = mockData.Artists.map(a => a.artistName)
-    const allSongs = ref()
-    const getSongs = async() => {
+    const allArtists = ref()
+    const getArtists = async() => {
       try {
-        const response = await axios.get("/api/songs");
+        const response = await axios.get("/api/artists");
         console.log('responsedata', response.data)
-        allSongs.value = response.data;
+        allArtists.value = response.data;
       } catch (err) {
         console.log(err);
       }
     }
     onMounted(() => {
-      getSongs()
+      getArtists()
     })
     return {
       selectedArtists: [],
