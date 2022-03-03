@@ -5,7 +5,6 @@ import cors from "cors";
 
 import path from 'path';
 
-import db from "./config/database.js";
 import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
