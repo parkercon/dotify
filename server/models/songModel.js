@@ -1,4 +1,4 @@
-import db from "../config/database.js"
+import { db, db_config} from "../config/database.js"
 
 function handleDisconnect() {
     db = mysql.createConnection(db_config); // Recreate the connection, since
