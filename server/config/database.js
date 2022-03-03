@@ -16,4 +16,4 @@ pool.on('connection', function (_conn) {
   }
 });
 
-export var db = mysql.createConnection(db_config);
+export var db = 'mysql.createConnection(db_config);'
