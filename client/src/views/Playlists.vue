@@ -40,7 +40,7 @@ export default {
       getPlaylists()
     })
     return {
-      playlists: mockData.Playlists,
+      playlists: allPlaylists,
       selectedNames: [], 
       selectedUserIds: [],
       selecteDates: [],

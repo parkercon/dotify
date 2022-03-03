@@ -11,9 +11,9 @@ function handleDisconnect() {
     });
 }   
 
-// Get All Users
-export const getUsers = (result) => {
-  db.query("SELECT * FROM users", (err, results) => {             
+// Get All Artists
+export const getArtistsAndSongs = (result) => {
+  db.query("SELECT * FROM artistSongs", (err, results) => {             
       if(err) {
           console.log(err);
           handleDisconnect()

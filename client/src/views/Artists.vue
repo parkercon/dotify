@@ -38,7 +38,7 @@ export default {
     return {
       selectedArtists: [],
       artistNames,
-      artists: mockData.Artists,
+      artists: allArtists,
       fields: [
         { key: "artistId", label: "artistId"},
         { key: "artistName", label: "artistName" },

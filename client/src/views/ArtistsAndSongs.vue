@@ -19,13 +19,28 @@
 
 <script>
 import mockData from '../data/mockData.json'
+import axios from "axios";
+import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'ArtistsAndSongs',
   setup () {
     const artistsOnly = [...new Set(mockData.ArtistsAndSongs.map(aS => aS.artistId))].sort()
     const songsOnly = [...new Set(mockData.ArtistsAndSongs.map(aS => aS.songId))].sort()
+    const allArtistsAndSongs = ref()
+    const getArtistsAndSongs = async() => {
+      try {
+        const response = await axios.get("/api/artistsAndSongs");
+        console.log('responsedata', response.data)
+        allArtistsAndSongs.value = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    onMounted(() => {
+      getArtistsAndSongs()
+    })
     return {
-      artistsAndSongs: mockData.ArtistsAndSongs,
+      artistsAndSongs: allArtistsAndSongs,
       artistsOnly,
       songsOnly,
       selectedSongs: [],

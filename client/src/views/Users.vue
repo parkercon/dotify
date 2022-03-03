@@ -20,6 +20,8 @@
 
 <script>
 import mockData from '../data/mockData.json'
+import axios from "axios";
+import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'Users',
   setup () {
@@ -42,7 +44,7 @@ export default {
       getUsers()
     })
     return {
-      users: mockData.Users,
+      users: allUsers,
       selectedPasswords: [], 
       selectedfNames: [],
       selectedlNames: [],
