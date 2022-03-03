@@ -9,6 +9,14 @@ var db_config = {
   database        : process.env.DB
 }
 
+let pool = mysql.createPool(db_config);
+pool.on('connection', function (_conn) {
+  if (_conn) {
+      logger.info('Connected the database via threadId %d!!', _conn.threadId);
+      _conn.query('SET SESSION auto_increment_increment=1');
+  }
+});
+
 var db = mysql.createConnection(db_config);
 export var db;
 export var db_config;
