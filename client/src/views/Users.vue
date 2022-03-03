@@ -28,6 +28,19 @@ export default {
     const lNames = mockData.Users.map(u => u.userlName)
     const birthdays = mockData.Users.map(u => u.userBirthday)
     const emails = mockData.Users.map(u => u.userEmail)
+    const allUsers = ref()
+    const getUsers = async() => {
+      try {
+        const response = await axios.get("/api/users");
+        console.log('responsedata', response.data)
+        allUsers.value = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    onMounted(() => {
+      getUsers()
+    })
     return {
       users: mockData.Users,
       selectedPasswords: [], 
