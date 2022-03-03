@@ -1,4 +1,4 @@
-import { db, db_config} from "../config/database.js"
+import { db, db_config, pool } from "../config/database.js"
 
 function handleDisconnect() {
     db = mysql.createConnection(db_config); // Recreate the connection, since
@@ -13,7 +13,7 @@ function handleDisconnect() {
 
 // Get All Songs
 export const getSongs = (result) => {
-  db.query("SELECT * FROM songs", (err, results) => {             
+    pool.query("SELECT * FROM songs", (err, results) => {             
       if(err) {
           console.log('error in songs:', err);
           handleDisconnect()
