@@ -11,7 +11,25 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add Song</b-button>
+    <b-modal ref=SongModal hide-footer>
+    <b-form @submit="onSubmit">
+      <b-form-group>
+        <b-form-input
+          v-model="songName"
+          placeholder="Enter Song Name"
+          required
+        ></b-form-input>
+          <b-form-input
+          v-model="songDate"
+          placeholder="Enter Song Date"
+          type="date"
+          required
+        ></b-form-input>
+      </b-form-group>
+    <b-button type="submit" variant="primary">Submit</b-button>
+    </b-form>
+    </b-modal>
+    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Song</b-button>
 </div>
 </template>
 
@@ -22,6 +40,9 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'Songs',
   setup () {
+    const SongModal = ref()
+    const songName = ref('')
+    const songDate = ref('')
     const names = mockData.Songs.map(s => s.songName)
     const dates = mockData.Songs.map(s => s.songDate)
     const allSongs = ref()
@@ -37,7 +58,37 @@ export default {
     onMounted(() => {
       getSongs()
     })
+
+    const onShowModal = () => {
+      SongModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      console.log('Song name: ', songName.value)
+      console.log('Song Date: ', songDate.value)
+      addSong()
+    }
+
+    const addSong = async() => {
+      try {
+        await axios.post("/api/songs", {
+          songName: songName.value,
+          songDate: songDate.value,
+        });
+        songName.value = '';
+        songDate.value = '';
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return {
+      onSubmit,
+      SongModal,
+      onShowModal,
+      songName,
+      songDate,
       songs: allSongs,
       selectedNames: [],
       selectedDates: [],
