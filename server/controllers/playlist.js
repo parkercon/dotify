@@ -1,4 +1,4 @@
-import { getPlaylists } from '../models/playlistModel.js'
+import { getPlaylists, insertPlaylist } from '../models/playlistModel.js'
 
 export const showPlaylists = (req, res) => {
   getPlaylists((err, results) => {
@@ -9,4 +9,15 @@ export const showPlaylists = (req, res) => {
           res.json(results);
       }
   });
+}
+
+export const createPlaylist = (req, res) => {
+    const data = req.body;
+    insertPlaylist(data, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
 }

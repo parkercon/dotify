@@ -76,6 +76,7 @@ export default {
           songName: songName.value,
           songDate: songDate.value,
         });
+        getSongs()
         songName.value = '';
         songDate.value = '';
       } catch (err) {

@@ -1,11 +1,11 @@
 import express from 'express';
 
 import { showSongs, createSong } from '../../controllers/song.js';
-import { showArtists } from '../../controllers/artist.js';
-import { showPlaylists } from '../../controllers/playlist.js';
-import { showUsers } from '../../controllers/user.js';
-import { showPlaylistsAndSongs } from '../../controllers/playlistAndSong.js';
-import { showArtistsAndSongs } from '../../controllers/artistAndSong.js';
+import { showArtists, createArtist } from '../../controllers/artist.js';
+import { showPlaylists, createPlaylist } from '../../controllers/playlist.js';
+import { showUsers, createUser } from '../../controllers/user.js';
+import { showPlaylistsAndSongs, createPlaylistAndSong } from '../../controllers/playlistAndSong.js';
+import { showArtistsAndSongs, createArtistAndSong } from '../../controllers/artistAndSong.js';
 
 const router = express.Router()
 
@@ -17,5 +17,11 @@ router.get('/api/playlistsAndSongs', showPlaylistsAndSongs)
 router.get('/api/artistsAndSongs', showArtistsAndSongs)
 
 router.post('/api/songs', createSong)
+router.post('/api/artists', createArtist)
+router.post('/api/playlists', createPlaylist)
+router.post('/api/users', createUser)
+router.post('/api/playlistsAndSongs', createPlaylistAndSong)
+router.post('/api/artistsAndSongs', createArtistAndSong)
+
 
 export default router
