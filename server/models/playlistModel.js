@@ -23,3 +23,14 @@ export const getPlaylists = (result) => {
       }
   });   
 }
+
+export const insertPlaylist = (data, result) => {
+    pool.query("INSERT INTO playlists SET ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
