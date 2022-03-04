@@ -11,7 +11,24 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add Playlists & Songs</b-button>
+  <b-modal ref=PlaylistAndSongModal hide-footer>
+  <b-form @submit="onSubmit">
+    <b-form-group>
+      <b-form-input
+        v-model="playlistId"
+        placeholder="Enter Playlist Id"
+        required
+      ></b-form-input>
+        <b-form-input
+        v-model="songId"
+        placeholder="Enter Song Id"
+        required
+      ></b-form-input>
+    </b-form-group>
+  <b-button type="submit" variant="primary">Submit</b-button>
+  </b-form>
+  </b-modal>
+  <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Playlist and Song Relationship</b-button>
 </div>
 </template>
 
@@ -22,6 +39,9 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'PlaylistsAndSongs',
   setup () {
+    const PlaylistAndSongModal = ref()
+    const playlistId = ref('')
+    const songId = ref('')
     const playlists = [...new Set(mockData.PlaylistsAndSongs.map(pS => pS.playlistId))].sort()
     const songs = [...new Set(mockData.PlaylistsAndSongs.map(pS => pS.songId))].sort()
     const allPlaylistsAndSongs = ref()
@@ -37,7 +57,35 @@ export default {
     onMounted(() => {
       getPlaylistsAndSongs()
     })
+
+    const onShowModal = () => {
+      PlaylistAndSongModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      addPlaylistAndSong()
+    }
+
+    const addPlaylistAndSong = async() => {
+      try {
+        await axios.post("/api/playlistsAndSongs", {
+          playlistId: playlistId.value,
+          songId: songId.value
+        });
+          playlistId.value = ''
+          songId.value = ''
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return {
+      onSubmit,
+      onShowModal,
+      songId,
+      playlistId,
+      PlaylistAndSongModal,
       playlistsAndSongs: allPlaylistsAndSongs,
       selectedSongs: [],
       selectedPlaylists: [],

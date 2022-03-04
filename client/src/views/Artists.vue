@@ -10,7 +10,19 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add Artist</b-button>
+    <b-modal ref=ArtistModal hide-footer>
+    <b-form @submit="onSubmit">
+      <b-form-group>
+        <b-form-input
+          v-model="artistName"
+          placeholder="Enter Artist Name"
+          required
+        ></b-form-input>
+      </b-form-group>
+    <b-button type="submit" variant="primary">Submit</b-button>
+    </b-form>
+    </b-modal>
+    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Artist</b-button>
 </div>
 </template>
 
@@ -21,6 +33,8 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'Artists',
   setup () {
+    const ArtistModal = ref()
+    const artistName = ref('')
     const artistNames = mockData.Artists.map(a => a.artistName)
     const allArtists = ref()
     const getArtists = async() => {
@@ -35,7 +49,31 @@ export default {
     onMounted(() => {
       getArtists()
     })
+
+    const onShowModal = () => {
+      ArtistModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      addArtist()
+    }
+
+    const addArtist = async() => {
+      try {
+        await axios.post("/api/artists", {
+          artistName: artistName.value
+        });
+        artistName.value = '';
+      } catch (err) {
+        console.log(err);
+      }
+    }
     return {
+      onShowModal,
+      onSubmit,
+      artistName,
+      ArtistModal,
       selectedArtists: [],
       artistNames,
       artists: allArtists,

@@ -13,7 +13,24 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add Artists & Songs</b-button>
+  <b-modal ref=ArtistAndSongModal hide-footer>
+  <b-form @submit="onSubmit">
+    <b-form-group>
+      <b-form-input
+        v-model="artistId"
+        placeholder="Enter Artist Id"
+        required
+      ></b-form-input>
+        <b-form-input
+        v-model="songId"
+        placeholder="Enter Song Id"
+        required
+      ></b-form-input>
+    </b-form-group>
+  <b-button type="submit" variant="primary">Submit</b-button>
+  </b-form>
+  </b-modal>
+  <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Artist and Song Relationship</b-button>
 </div>
 </template>
 
@@ -24,6 +41,9 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'ArtistsAndSongs',
   setup () {
+    const ArtistAndSongModal = ref()
+    const artistId = ref('')
+    const songId = ref('')
     const artistsOnly = [...new Set(mockData.ArtistsAndSongs.map(aS => aS.artistId))].sort()
     const songsOnly = [...new Set(mockData.ArtistsAndSongs.map(aS => aS.songId))].sort()
     const allArtistsAndSongs = ref()
@@ -39,7 +59,35 @@ export default {
     onMounted(() => {
       getArtistsAndSongs()
     })
+
+    const onShowModal = () => {
+      ArtistAndSongModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      addArtistAndSong()
+    }
+
+    const addArtistAndSong = async() => {
+      try {
+        await axios.post("/api/artistsAndSongs", {
+          artistId: artistId.value,
+          userId: songId.value
+        });
+        artistId.value = ''
+        songId.value = ''
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return {
+      onSubmit,
+      onShowModal,
+      songId,
+      artistId,
+      ArtistAndSongModal,
       artistsAndSongs: allArtistsAndSongs,
       artistsOnly,
       songsOnly,

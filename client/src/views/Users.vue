@@ -14,7 +14,42 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add User</b-button>
+    <b-modal ref=UserModal hide-footer>
+    <b-form @submit="onSubmit">
+      <b-form-group>
+        <b-form-input
+          v-model="userPassword"
+          placeholder="Enter User Password"
+          type="password"
+          required
+        ></b-form-input>
+          <b-form-input
+          v-model="userfName"
+          placeholder="Enter User FirstName"
+          required
+        ></b-form-input>
+          <b-form-input
+          v-model="userlName"
+          placeholder="Enter User LastName"
+          required
+        ></b-form-input>
+          <b-form-input
+          v-model="userBirthday"
+          placeholder="Enter User Birthday"
+          type="date"
+          required
+        ></b-form-input>
+          <b-form-input
+          v-model="userEmail"
+          placeholder="Enter User Email"
+          type="email"
+          required
+        ></b-form-input>
+      </b-form-group>
+    <b-button type="submit" variant="primary">Submit</b-button>
+    </b-form>
+    </b-modal>
+    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add User</b-button>
 </div>
 </template>
 
@@ -25,6 +60,12 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'Users',
   setup () {
+    const UserModal = ref()
+    const userPassword = ref('')
+    const userfName = ref('')
+    const userlName = ref('')
+    const userBirthday = ref('')
+    const userEmail = ref('')
     const passwords = mockData.Users.map(u => u.userPassword)
     const fNames = mockData.Users.map(u => u.userfName)
     const lNames = mockData.Users.map(u => u.userlName)
@@ -43,7 +84,44 @@ export default {
     onMounted(() => {
       getUsers()
     })
+
+    const onShowModal = () => {
+      UserModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      addUser()
+    }
+
+    const addUser = async() => {
+      try {
+        await axios.post("/api/users", {
+          userPassword: userPassword.value,
+          userfName: userfName.value,
+          userlName: userlName.value,
+          userBirthday: userBirthday.value,
+          userEmail: userEmail.value
+        });
+          userPassword.value = ''
+          userfName.value = ''
+          userlName.value = ''
+          userBirthday.value = ''
+          userEmail.value = ''
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return {
+      onSubmit,
+      onShowModal,
+      UserModal,
+      userPassword,
+      userfName,
+      userlName ,
+      userBirthday,
+      userEmail,
       users: allUsers,
       selectedPasswords: [], 
       selectedfNames: [],

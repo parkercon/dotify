@@ -12,7 +12,30 @@
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
-    <b-button style="margin-top: 10px;" variant="success">Add Playlist</b-button>
+  <b-modal ref=PlaylistModal hide-footer>
+  <b-form @submit="onSubmit">
+    <b-form-group>
+      <b-form-input
+        v-model="playlistName"
+        placeholder="Enter Playlist Name"
+        required
+      ></b-form-input>
+        <b-form-input
+        v-model="userId"
+        placeholder="Enter User Id"
+        required
+      ></b-form-input>
+      <b-form-input
+        v-model="playlistDate"
+        placeholder="Enter Playlist Date"
+        type="date"
+        required
+      ></b-form-input>
+    </b-form-group>
+  <b-button type="submit" variant="primary">Submit</b-button>
+  </b-form>
+  </b-modal>
+  <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Playlist</b-button>
 </div>
 </template>
 
@@ -23,6 +46,10 @@ import { ref, onMounted } from '@vue/composition-api'
 export default {
   name: 'Playlists',
   setup () {
+    const PlaylistModal = ref()
+    const playlistName = ref('')
+    const userId = ref('')
+    const playlistDate = ref('')
     const playlistNames = mockData.Playlists.map(p => p.playlistName)
     const userIds = mockData.Playlists.map(p => p.userId)
     const playlistDates = mockData.Playlists.map(p => p.playlistDate)
@@ -39,7 +66,38 @@ export default {
     onMounted(() => {
       getPlaylists()
     })
+
+    const onShowModal = () => {
+      PlaylistModal.value.show()
+    }
+
+    const onSubmit = (event) => {
+      event.preventDefault()
+      addPlaylist()
+    }
+
+    const addPlaylist = async() => {
+      try {
+        await axios.post("/api/playlists", {
+          playlistName: playlistName.value,
+          userId: userId.value,
+          playlistDate: playlistDate.value
+        });
+          playlistName.value = ''
+          userId.value = ''
+          playlistDate.value = ''
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     return {
+      onSubmit,
+      onShowModal,
+      playlistDate,
+      userId,
+      playlistName,
+      PlaylistModal,
       playlists: allPlaylists,
       selectedNames: [], 
       selectedUserIds: [],
