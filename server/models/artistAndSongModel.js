@@ -13,7 +13,7 @@ function handleDisconnect() {
 
 // Get All Artists
 export const getArtistsAndSongs = (result) => {
-  db.query("SELECT * FROM artistSongs", (err, results) => {             
+  db.query("SELECT * FROM artistsongs", (err, results) => {             
       if(err) {
           console.log(err);
           handleDisconnect()

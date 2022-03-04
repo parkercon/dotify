@@ -13,7 +13,7 @@ router.get('/api/songs', showSongs)
 router.get('/api/artists', showArtists)
 router.get('/api/playlists', showPlaylists)
 router.get('/api/users', showUsers)
-router.get('/api/playlistsAndSongs', showUsers)
-router.get('/api/artistsAndSongs', showUsers)
+router.get('/api/playlistsAndSongs', showPlaylistsAndSongs)
+router.get('/api/artistsAndSongs', showArtistsAndSongs)
 
 export default router
