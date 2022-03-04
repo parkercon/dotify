@@ -13,13 +13,25 @@ import { db, db_config, pool } from "../config/database.js"
 
 // Get All Songs
 export const getSongs = (result) => {
-    pool.query("SELECT * FROM songs", (err, results) => {             
-      if(err) {
-          console.log('error in songs:', err);
-        //   handleDisconnect()
-          result(err, null);
-      } else {
-          result(null, results);
-      }
-  });   
+    pool.query("SELECT * FROM songs", (err, results) => {
+        if (err) {
+            console.log('error in songs:', err);
+            //   handleDisconnect()
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
+
+// Insert a Song
+export const insertSong = (data, result) => {
+    pool.query("INSERT INTO songs SET ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
 }

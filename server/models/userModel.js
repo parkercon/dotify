@@ -23,3 +23,14 @@ export const getUsers = (result) => {
       }
   });   
 }
+
+export const insertUser = (data, result) => {
+    pool.query("INSERT INTO users SET ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}

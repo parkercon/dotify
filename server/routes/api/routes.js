@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { showSongs } from '../../controllers/song.js';
+import { showSongs, createSong } from '../../controllers/song.js';
 import { showArtists } from '../../controllers/artist.js';
 import { showPlaylists } from '../../controllers/playlist.js';
 import { showUsers } from '../../controllers/user.js';
@@ -13,7 +13,9 @@ router.get('/api/songs', showSongs)
 router.get('/api/artists', showArtists)
 router.get('/api/playlists', showPlaylists)
 router.get('/api/users', showUsers)
-router.get('/api/playlistsAndSongs', showUsers)
-router.get('/api/artistsAndSongs', showUsers)
+router.get('/api/playlistsAndSongs', showPlaylistsAndSongs)
+router.get('/api/artistsAndSongs', showArtistsAndSongs)
+
+router.post('/api/songs', createSong)
 
 export default router
