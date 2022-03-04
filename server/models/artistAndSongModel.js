@@ -1,5 +1,4 @@
 import { db, db_config, pool } from "../config/database.js"
-s
 
 // Get All Artists
 export const getArtistsAndSongs = (result) => {
