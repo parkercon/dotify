@@ -1,4 +1,4 @@
-import { getUsers, insertUser, updateUserById } from '../models/userModel.js'
+import { getUsers, insertUser, updateUserById, deleteUserById } from '../models/userModel.js'
 
 export const showUsers = (req, res) => {
   getUsers((err, results) => {
@@ -26,6 +26,9 @@ export const updateUser = (req, res) => {
     const data = req.body;
     const id = req.params.id;
     updateUserById(data, id, (err, results) => {
+export const deleteUser = (req, res) => {
+    const id = req.params.id
+    deleteUserById(id, (err, results) => {
         if (err) {
             res.send(err);
         } else {

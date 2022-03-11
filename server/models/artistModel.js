@@ -26,6 +26,8 @@ export const insertArtist = (data, result) => {
 
 export const updateArtistById = (data, id, result) => {
     pool.query("UPDATE artists SET artistName = ? WHERE artistId = ?", [data.artistName, id], (err, results) => {
+export const deleteArtistById = (data, result) => {
+    pool.query("DELETE FROM artists WHERE artistId = ?", [data], (err, results) => {
         if (err) {
             console.log(err);
             result(err, null);

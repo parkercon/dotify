@@ -37,6 +37,8 @@ export const insertPlaylist = (data, result) => {
 
 export const updatePlaylistById = (data, id, result) => {
     pool.query("UPDATE playlists SET playlistName = ?, userId = ?, playlistDate = ? WHERE playlistId = ?", [data.playlistName, data.userId, data.playlistDate, id], (err, results) => {
+export const deletePlaylistById = (data, result) => {
+    pool.query("DELETE FROM playlists WHERE playlistId = ?", [data], (err, results) => {
         if (err) {
             console.log(err);
             result(err, null);

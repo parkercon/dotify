@@ -11,7 +11,7 @@
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
        <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
-        <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
+        <b-button @click="deleteUser(data.item.userId)" class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
     <b-modal ref=UserModal hide-footer>
@@ -154,7 +154,7 @@ export default {
         console.log('responsedata', response.data)
         allUsers.value = response.data;
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
     onMounted(() => {
@@ -185,12 +185,22 @@ export default {
           userBirthday.value = ''
           userEmail.value = ''
       } catch (err) {
-        console.log(err);
+        console.log(err)
+      }
+      getUsers()
+    }
+
+    const deleteUser = async(id) => {
+      try {
+        await axios.delete(`/api/users/${id}`)
+      } catch (err) {
+        console.log(err)
       }
       getUsers()
     }
 
     return {
+      deleteUser,
       onSubmit,
       onShowModal,
       UserModal,

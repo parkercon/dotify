@@ -1,4 +1,4 @@
-import { getArtists, insertArtist, updateArtistById } from '../models/artistModel.js'
+import { getArtists, insertArtist, updateArtistById, deleteArtistById } from '../models/artistModel.js'
 
 export const showArtists = (req, res) => {
     getArtists((err, results) => {
@@ -27,6 +27,9 @@ export const updateArtist = (req, res) => {
     const data = req.body;
     const id = req.params.id;
     updateArtistById(data, id, (err, results) => {
+export const deleteArtist = (req, res) => {
+    const id = req.params.id;
+    deleteArtistById(id, (err, results) => {
         if (err) {
             res.send(err);
         } else {

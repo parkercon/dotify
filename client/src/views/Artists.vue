@@ -7,7 +7,7 @@
      <template #cell(edit)="data">
        <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" v-if="!updateMode" variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
        <b-button  v-model="data.rowSelected" class="done" v-on:click="submitUpdate(data.index)" v-else-if="updateMode && !data.index" variant="transparent"><b-icon icon="check"></b-icon></b-button> 
-        <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
+        <b-button @click="deleteArtist(data.item.artistId)" class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
     <b-modal ref=ArtistModal hide-footer>
@@ -123,7 +123,17 @@ export default {
       console.log(e)
       updateMode.value = !updateMode.value
     }
+    const deleteArtist = async(id) => {
+      try {
+        await axios.delete(`/api/artists/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
+      getArtists()
+    }
+
     return {
+      deleteArtist,
       onShowModal,
       onSubmit,
       toggleUpdate,

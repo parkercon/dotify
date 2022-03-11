@@ -8,7 +8,7 @@
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
         <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" variant="transparent"><b-icon icon="pencil"></b-icon></b-button>
-        <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
+        <b-button @click="deleteSong(data.item.songId)" class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
     <b-modal ref=SongModal hide-footer>
@@ -133,7 +133,17 @@ export default {
       getSongs()
     }
 
+    const deleteSong = async(id) => {
+      try {
+        await axios.delete(`/api/songs/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
+      getSongs()
+    }
+
     return {
+      deleteSong,
       onSubmit,
       SongModal,
       onShowModal,

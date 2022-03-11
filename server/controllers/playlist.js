@@ -1,4 +1,4 @@
-import { getPlaylists, insertPlaylist, updatePlaylistById } from '../models/playlistModel.js'
+import { getPlaylists, insertPlaylist, updatePlaylistById, deletePlaylistById } from '../models/playlistModel.js'
 
 export const showPlaylists = (req, res) => {
   getPlaylists((err, results) => {
@@ -26,6 +26,9 @@ export const updatePlaylist = (req, res) => {
     const data = req.body;
     const id = req.params.id;
     updatePlaylistById(data, id, (err, results) => {
+export const deletePlaylist = (req, res) => {
+    const id = req.params.id;
+    deletePlaylistById(id, (err, results) => {
         if (err) {
             res.send(err);
         } else {
