@@ -22,13 +22,21 @@ export const createPlaylist = (req, res) => {
     });
 }
 
+export const deletePlaylist = (req, res) => {
+    const id = req.params.id;
+    deletePlaylistById(id, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
+}
+
 export const updatePlaylist = (req, res) => {
     const data = req.body;
     const id = req.params.id;
     updatePlaylistById(data, id, (err, results) => {
-export const deletePlaylist = (req, res) => {
-    const id = req.params.id;
-    deletePlaylistById(id, (err, results) => {
         if (err) {
             res.send(err);
         } else {

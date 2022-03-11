@@ -22,11 +22,18 @@ export const createArtist = (req, res) => {
     });
 }
 
-// Update Product
 export const updateArtist = (req, res) => {
     const data = req.body;
     const id = req.params.id;
     updateArtistById(data, id, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
+}
+
 export const deleteArtist = (req, res) => {
     const id = req.params.id;
     deleteArtistById(id, (err, results) => {

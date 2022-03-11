@@ -26,8 +26,6 @@ export const insertUser = (data, result) => {
 
 export const updateUserById = (data, id, result) => {
     pool.query("UPDATE users SET userPassword = ?, userfName = ?, userlName = ?, userBirthday = ?, userEmail = ? WHERE userId = ?", [data.userPassword, data.userfName, data.userlName, data.userBirthday, data.userEmail, id], (err, results) => {
-export const deleteUserById = (data, result) => {
-    pool.query("DELETE FROM users WHERE userid = ?", [data], (err, results) => {
         if (err) {
             console.log(err);
             result(err, null);
@@ -36,3 +34,14 @@ export const deleteUserById = (data, result) => {
         }
     });
 }
+
+export const deleteUserById = (data, result) => {
+     pool.query("DELETE FROM users WHERE userid = ?", [data], (err, results) => {
+         if (err) {
+             console.log(err);
+             result(err, null);
+         } else {
+             result(null, results);
+         }
+     });
+ }
