@@ -7,7 +7,7 @@
    <b-table striped hover :items="songs" :fields="fields">
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
-       <b-button variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
+        <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" variant="transparent"><b-icon icon="pencil"></b-icon></b-button>
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
@@ -29,6 +29,25 @@
     <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
     </b-modal>
+    <b-modal ref=updateModal hide-footer>
+    Update Song
+      <b-form @submit="onUpdateSubmit">
+        <b-form-group>
+          <b-form-input
+            :placeholder="updateName"
+            v-model="updateName"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updateDate"
+            v-model="updateDate"
+            type="date"
+            required
+          ></b-form-input>
+        </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
+    </b-modal>
     <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Song</b-button>
 </div>
 </template>
@@ -46,6 +65,10 @@ export default {
     const names = mockData.Songs.map(s => s.songName)
     const dates = mockData.Songs.map(s => s.songDate)
     const allSongs = ref()
+    const updateName = ref('')
+    const updateModal = ref()
+    const updateDate = ref()
+    const updateId = ref()
     const getSongs = async() => {
       try {
         const response = await axios.get("/api/songs");
@@ -58,6 +81,32 @@ export default {
     onMounted(() => {
       getSongs()
     })
+    const onUpdateSubmit = (e) => {
+      e.preventDefault()
+      updateSong()
+    }
+
+    const updateSong = async() => {
+      try {
+        await axios.put(
+          `/api/songs/${allSongs.value[updateId.value].songId}`,
+          {
+            songName: updateName.value,
+            songDate: updateDate.value
+          }
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      getSongs()
+    }
+
+    const onUpdate = (idx) => {
+      updateId.value = idx
+      updateName.value = allSongs.value[idx].songName
+      updateDate.value = allSongs.value[idx].songDate
+      updateModal.value.show()
+    }
 
     const onShowModal = () => {
       SongModal.value.show()
@@ -90,6 +139,12 @@ export default {
       onShowModal,
       songName,
       songDate,
+      updateId, 
+      updateName, 
+      updateDate,
+      onUpdateSubmit, 
+      onUpdate,
+      updateModal,
       songs: allSongs,
       selectedNames: [],
       selectedDates: [],

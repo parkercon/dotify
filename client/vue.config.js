@@ -8,5 +8,10 @@ module.exports = {
         target: 'http://localhost:12345'
       }
     }
-  }
+  }, 
+  pwa: {
+    workboxOptions: {
+        skipWaiting: true
+    }
+}
 }

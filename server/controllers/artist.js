@@ -1,19 +1,32 @@
-import { getArtists, insertArtist } from '../models/artistModel.js'
+import { getArtists, insertArtist, updateArtistById } from '../models/artistModel.js'
 
 export const showArtists = (req, res) => {
-  getArtists((err, results) => {
-      if (err){
-          res.send(err);
-      }else{
-          console.log('results: ', results)
-          res.json(results);
-      }
-  });
+    getArtists((err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log('results: ', results)
+            res.json(results);
+        }
+    });
 }
 
 export const createArtist = (req, res) => {
     const data = req.body;
     insertArtist(data, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
+}
+
+// Update Product
+export const updateArtist = (req, res) => {
+    const data = req.body;
+    const id = req.params.id;
+    updateArtistById(data, id, (err, results) => {
         if (err) {
             res.send(err);
         } else {

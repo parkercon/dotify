@@ -10,7 +10,7 @@
    <b-table striped hover :items="users" :fields="fields">
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
-       <b-button variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
+       <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
@@ -49,6 +49,40 @@
     <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
     </b-modal>
+    <b-modal ref=updateModal hide-footer>
+    Update User
+      <b-form @submit="onUpdateSubmit">
+        <b-form-group>
+          <b-form-input
+            :placeholder="updatePassword"
+            v-model="updatePassword"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updatefName"
+            v-model="updatefName"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updatelName"
+            v-model="updatelName"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updateEmail"
+            v-model="updateEmail"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updateDate"
+            v-model="updateDate"
+            type="date"
+            required
+          ></b-form-input>
+        </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
+    </b-modal>
     <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add User</b-button>
 </div>
 </template>
@@ -72,6 +106,48 @@ export default {
     const birthdays = mockData.Users.map(u => u.userBirthday)
     const emails = mockData.Users.map(u => u.userEmail)
     const allUsers = ref()
+
+    const updatefName = ref('')
+    const updateModal = ref()
+    const updatelName = ref('')
+    const updateDate = ref()
+    const updateEmail = ref()
+    const updatePassword = ref()
+    const updateId = ref()
+
+    const onUpdateSubmit = (e) => {
+      e.preventDefault()
+      updateUser()
+    }
+
+    const updateUser = async() => {
+      try {
+        await axios.put(
+          `/api/users/${allUsers.value[updateId.value].userId}`,
+          {
+            userfName: updatefName.value,
+            userlName: updatelName.value,
+            userPassword: updatePassword.value,
+            userBirthday: updateDate.value,
+            userEmail: updateEmail.value
+          }
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      getUsers()
+    }
+
+    const onUpdate = (idx) => {
+      updateId.value = idx
+      updatefName.value = allUsers.value[idx].userfName
+      updatelName.value = allUsers.value[idx].userlName
+      updateDate.value = allUsers.value[idx].userBirthday
+      updatePassword.value = allUsers.value[idx].userPassword
+      updateEmail.value = allUsers.value[idx].userEmail
+      updateModal.value.show()
+    }  
+
     const getUsers = async() => {
       try {
         const response = await axios.get("/api/users");
@@ -123,6 +199,14 @@ export default {
       userlName ,
       userBirthday,
       userEmail,
+      onUpdateSubmit,
+      updatefName,
+      updatelName,
+      updateDate,
+      updateEmail,
+      updatePassword,
+      updateModal,
+      onUpdate,
       users: allUsers,
       selectedPasswords: [], 
       selectedfNames: [],

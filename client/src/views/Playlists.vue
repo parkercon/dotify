@@ -8,7 +8,7 @@
    <b-table striped hover :items="playlists" :fields="fields">
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
-       <b-button variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
+       <b-button v-model="data.rowSelected" v-on:click="onUpdate(data.index)" variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
         <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
@@ -35,6 +35,30 @@
   <b-button type="submit" variant="primary">Submit</b-button>
   </b-form>
   </b-modal>
+    <b-modal ref=updateModal hide-footer>
+    Update Playlist
+      <b-form @submit="onUpdateSubmit">
+        <b-form-group>
+          <b-form-input
+            :placeholder="updateName"
+            v-model="updateName"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updateUserId.toString()"
+            v-model="updateUserId"
+            required
+          ></b-form-input>
+          <b-form-input
+            :placeholder="updateDate"
+            v-model="updateDate"
+            type="date"
+            required
+          ></b-form-input>
+        </b-form-group>
+      <b-button type="submit" variant="primary">Submit</b-button>
+      </b-form>
+    </b-modal>
   <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Playlist</b-button>
 </div>
 </template>
@@ -54,6 +78,11 @@ export default {
     const userIds = mockData.Playlists.map(p => p.userId)
     const playlistDates = mockData.Playlists.map(p => p.playlistDate)
     const allPlaylists = ref()
+    const updateName = ref('')
+    const updateModal = ref()
+    const updateUserId = ref('')
+    const updateDate = ref()
+    const updateId = ref()
     const getPlaylists = async() => {
       try {
         const response = await axios.get("/api/playlists");
@@ -66,6 +95,34 @@ export default {
     onMounted(() => {
       getPlaylists()
     })
+    const onUpdateSubmit = (e) => {
+      e.preventDefault()
+      updatePlaylist()
+    }
+
+    const updatePlaylist = async() => {
+      try {
+        await axios.put(
+          `/api/playlists/${allPlaylists.value[updateId.value].playlistId}`,
+          {
+            playlistName: updateName.value,
+            playlistDate: updateDate.value,
+            userId: updateUserId.value
+          }
+        )
+      } catch (err) {
+        console.log(err)
+      }
+      getPlaylists()
+    }
+
+    const onUpdate = (idx) => {
+      updateId.value = idx
+      updateName.value = allPlaylists.value[idx].playlistName
+      updateDate.value = allPlaylists.value[idx].playlistDate
+      updateUserId.value = allPlaylists.value[idx].userId
+      updateModal.value.show()
+    }
 
     const onShowModal = () => {
       PlaylistModal.value.show()
@@ -104,8 +161,15 @@ export default {
       selectedUserIds: [],
       selecteDates: [],
       playlistNames, 
-      userIds, 
+      userIds,
+      updateDate,
+      updateName, 
+      updateUserId,
+      updateModal, 
       playlistDates,
+      onUpdateSubmit,
+      updateId,
+      onUpdate,
       fields: [
         { key: "playlistId", label: "playlistId"},
         { key: "playlistName", label: "playlistName" },

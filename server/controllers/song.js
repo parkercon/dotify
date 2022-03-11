@@ -1,4 +1,4 @@
-import { getSongs, insertSong } from '../models/songModel.js'
+import { getSongs, insertSong, updateSongById } from '../models/songModel.js'
 
 export const showSongs = (req, res) => {
     getSongs((err, results) => {
@@ -14,6 +14,18 @@ export const showSongs = (req, res) => {
 export const createSong = (req, res) => {
     const data = req.body;
     insertSong(data, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
+}
+
+export const updateSong = (req, res) => {
+    const data = req.body;
+    const id = req.params.id;
+    updateSongById(data, id, (err, results) => {
         if (err) {
             res.send(err);
         } else {

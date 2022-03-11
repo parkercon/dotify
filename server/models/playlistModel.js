@@ -34,3 +34,14 @@ export const insertPlaylist = (data, result) => {
         }
     });
 }
+
+export const updatePlaylistById = (data, id, result) => {
+    pool.query("UPDATE playlists SET playlistName = ?, userId = ?, playlistDate = ? WHERE playlistId = ?", [data.playlistName, data.userId, data.playlistDate, id], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}

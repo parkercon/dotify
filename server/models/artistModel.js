@@ -2,19 +2,30 @@ import { db, db_config, pool } from "../config/database.js"
 
 // Get All Artists
 export const getArtists = (result) => {
-  pool.query("SELECT * FROM artists", (err, results) => {             
-      if(err) {
-          console.log(err);
-          // handleDisconnect()
-          result(err, null);
-      } else {
-          result(null, results);
-      }
-  });   
+    pool.query("SELECT * FROM artists", (err, results) => {
+        if (err) {
+            console.log(err);
+            // handleDisconnect()
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
 }
 
 export const insertArtist = (data, result) => {
     pool.query("INSERT INTO artists SET ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
+
+export const updateArtistById = (data, id, result) => {
+    pool.query("UPDATE artists SET artistName = ? WHERE artistId = ?", [data.artistName, id], (err, results) => {
         if (err) {
             console.log(err);
             result(err, null);
