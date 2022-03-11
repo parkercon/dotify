@@ -35,3 +35,14 @@ export const insertSong = (data, result) => {
         }
     });
 }
+
+export const deleteSongById = (data, result) => {
+    pool.query("DELETE FROM songs WHERE songId = ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}

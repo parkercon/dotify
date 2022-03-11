@@ -23,3 +23,14 @@ export const insertArtist = (data, result) => {
         }
     });
 }
+
+export const deleteArtistById = (data, result) => {
+    pool.query("DELETE FROM artists WHERE artistId = ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}

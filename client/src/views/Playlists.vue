@@ -9,7 +9,7 @@
      <template #cell(edit)="data">
        <span v-if="!data.rowSelected"></span>
        <b-button variant="transparent"><b-icon icon="pencil"></b-icon></b-button> 
-        <b-button class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
+        <b-button @click="deletePlaylist(data.item.playlistId)" class="delete" variant="transparent"><b-icon icon="trash"></b-icon></b-button>
      </template>
    </b-table>
   <b-modal ref=PlaylistModal hide-footer>
@@ -92,7 +92,17 @@ export default {
       getPlaylists()
     }
 
+    const deletePlaylist = async(id) => {
+      try {
+        await axios.delete(`/api/playlists/${id}`)
+      } catch (err) {
+        console.log(err)
+      }
+      getPlaylists()
+    }
+
     return {
+      deletePlaylist,
       onSubmit,
       onShowModal,
       playlistDate,

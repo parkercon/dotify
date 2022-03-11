@@ -34,3 +34,14 @@ export const insertPlaylist = (data, result) => {
         }
     });
 }
+
+export const deletePlaylistById = (data, result) => {
+    pool.query("DELETE FROM playlists WHERE playlistId = ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}

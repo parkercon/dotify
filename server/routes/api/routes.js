@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { showSongs, createSong } from '../../controllers/song.js';
-import { showArtists, createArtist } from '../../controllers/artist.js';
-import { showPlaylists, createPlaylist } from '../../controllers/playlist.js';
-import { showUsers, createUser } from '../../controllers/user.js';
-import { showPlaylistsAndSongs, createPlaylistAndSong } from '../../controllers/playlistAndSong.js';
-import { showArtistsAndSongs, createArtistAndSong } from '../../controllers/artistAndSong.js';
+import { showSongs, createSong, deleteSong } from '../../controllers/song.js';
+import { showArtists, createArtist, deleteArtist } from '../../controllers/artist.js';
+import { showPlaylists, createPlaylist, deletePlaylist } from '../../controllers/playlist.js';
+import { showUsers, createUser, deleteUser } from '../../controllers/user.js';
+import { showPlaylistsAndSongs, createPlaylistAndSong, deletePlaylistAndSong } from '../../controllers/playlistAndSong.js';
+import { showArtistsAndSongs, createArtistAndSong, deleteArtistAndSong } from '../../controllers/artistAndSong.js';
 
 const router = express.Router()
 
@@ -22,6 +22,13 @@ router.post('/api/playlists', createPlaylist)
 router.post('/api/users', createUser)
 router.post('/api/playlistsAndSongs', createPlaylistAndSong)
 router.post('/api/artistsAndSongs', createArtistAndSong)
+
+router.delete('/api/songs/:id', deleteSong)
+router.delete('/api/artists/:id', deleteArtist)
+router.delete('/api/playlists/:id', deletePlaylist)
+router.delete('/api/users/:id', deleteUser)
+router.delete('/api/playlistsAndSongs/:playlistId/:songId', deletePlaylistAndSong)
+router.delete('/api/artistsAndSongs/:artistId/:songId', deleteArtistAndSong)
 
 
 export default router

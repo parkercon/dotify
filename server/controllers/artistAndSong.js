@@ -1,4 +1,4 @@
-import { getArtistsAndSongs, insertArtistAndSong } from '../models/artistAndSongModel.js'
+import { getArtistsAndSongs, insertArtistAndSong, deleteArtistAndSongById } from '../models/artistAndSongModel.js'
 
 export const showArtistsAndSongs = (req, res) => {
   getArtistsAndSongs((err, results) => {
@@ -14,6 +14,20 @@ export const showArtistsAndSongs = (req, res) => {
 export const createArtistAndSong = (req, res) => {
     const data = req.body;
     insertArtistAndSong(data, (err, results) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(results);
+        }
+    });
+}
+
+export const deleteArtistAndSong = (req, res) => {
+    const id = {
+        artistId: req.params.artistId,
+        songId: req.params.songId
+    }
+    deleteArtistAndSongById(id, (err, results) => {
         if (err) {
             res.send(err);
         } else {
