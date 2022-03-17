@@ -73,7 +73,7 @@ export default {
       try {
         await axios.post("/api/artistsAndSongs", {
           artistId: artistId.value,
-          userId: songId.value
+          songId: songId.value
         });
         artistId.value = ''
         songId.value = ''
