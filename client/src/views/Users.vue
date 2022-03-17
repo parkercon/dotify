@@ -153,6 +153,12 @@ export default {
         const response = await axios.get("/api/users");
         console.log('responsedata', response.data)
         allUsers.value = response.data;
+        for (let i = 0; i<allUsers.value.length; i++) {
+          const formattedDate = new Date(allUsers.value[i].userBirthday).toLocaleDateString(
+          'en-us'
+          );
+          allUsers.value[i].userBirthday = formattedDate
+        }
       } catch (err) {
         console.log(err)
       }

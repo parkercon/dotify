@@ -74,6 +74,12 @@ export default {
         const response = await axios.get("/api/songs");
         console.log('responsedata', response.data)
         allSongs.value = response.data;
+        for (let i = 0; i<allSongs.value.length; i++) {
+          const formattedDate = new Date(allSongs.value[i].songDate).toLocaleDateString(
+          'en-us'
+          );
+          allSongs.value[i].songDate = formattedDate
+        }
       } catch (err) {
         console.log(err);
       }

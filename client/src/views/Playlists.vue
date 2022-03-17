@@ -88,6 +88,12 @@ export default {
         const response = await axios.get("/api/playlists");
         console.log('responsedata', response.data)
         allPlaylists.value = response.data;
+        for (let i = 0; i<allPlaylists.value.length; i++) {
+          const formattedDate = new Date(allPlaylists.value[i].playlistDate).toLocaleDateString(
+          'en-us'
+          );
+          allPlaylists.value[i].playlistDate = formattedDate
+        }
       } catch (err) {
         console.log(err);
       }
