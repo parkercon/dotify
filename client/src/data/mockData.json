@@ -19,7 +19,7 @@
   "Users": [
     {
       "userId": 1,
-      "userPassword": "******",
+      "userPassword": "123",
       "userfName": "Parker",
       "userlName": "Conrad",
       "userBirthday": "2001-01-11",
@@ -27,7 +27,7 @@
     },
     {
       "userId": 2,
-      "userPassword": "******",
+      "userPassword": "321",
       "userfName": "Alihan",
       "userlName": "Baysal",
       "userBirthday": "1999-02-12",
@@ -35,7 +35,7 @@
     },
     {
       "userId": 3,
-      "userPassword": "******",
+      "userPassword": "312",
       "userfName": "Frederick",
       "userlName": "Boulton",
       "userBirthday": "2003-03-13",
