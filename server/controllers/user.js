@@ -1,4 +1,4 @@
-import { getUsers, insertUser, updateUserById, deleteUserById } from '../models/userModel.js'
+import { getUsers, insertUser, updateUserById, deleteUserById, getUserByEmail } from '../models/userModel.js'
 
 export const showUsers = (req, res) => {
   getUsers((err, results) => {
@@ -10,6 +10,18 @@ export const showUsers = (req, res) => {
       }
   });
 }
+ 
+export const showUserByEmail = (req, res) => {
+    console.log('req:', req.params)
+    getUserByEmail(req.params.userEmail, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+ 
 
 export const createUser = (req, res) => {
     const data = req.body;

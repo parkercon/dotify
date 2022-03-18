@@ -1,8 +1,8 @@
 <template>
 <div style="margin-top: 10%; padding-bottom: 15vh">
   <b-container style="margin-top: 10%;">
-      <v-selectize v-model="selectedNames" :options="names" placeholder="Select Song Names" multiple/>
-      <v-selectize v-model="selectedDates" :options="dates" placeholder="Select Song Dates" multiple/>
+    <b-button @click="onShowModal" style="margin-top: 10px; margin-bottom: 10px" variant="success">Add Song</b-button>
+      <v-selectize v-model="selectedNames" :options="names" placeholder="Select Song Names"/>
   </b-container>
    <b-table striped hover :items="songs" :fields="fields">
      <template #cell(edit)="data">
@@ -48,27 +48,46 @@
       <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-modal>
-    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Song</b-button>
 </div>
 </template>
 
 <script>
 import mockData from '../data/mockData.json'
 import axios from "axios";
-import { ref, onMounted } from '@vue/composition-api'
+import { ref, onMounted, watch } from '@vue/composition-api'
 export default {
   name: 'Songs',
   setup () {
     const SongModal = ref()
     const songName = ref('')
     const songDate = ref('')
-    const names = mockData.Songs.map(s => s.songName)
+    const names = ref([])
     const dates = mockData.Songs.map(s => s.songDate)
     const allSongs = ref()
     const updateName = ref('')
     const updateModal = ref()
     const updateDate = ref()
     const updateId = ref()
+    const selectedNames = ref('')
+
+    const getSongByName = async() => {
+      try {
+        const response = await axios.get(
+          `/api/songs/${selectedNames.value}`
+        )
+        allSongs.value = allSongs.value.filter(u => response.data.some(u2 => u.songId == u2.songId))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    watch(selectedNames, () => {
+      getSongByName()
+      if (selectedNames.value == null) {
+        getSongs()
+      }
+    })
+
     const getSongs = async() => {
       try {
         const response = await axios.get("/api/songs");
@@ -80,6 +99,7 @@ export default {
           );
           allSongs.value[i].songDate = formattedDate
         }
+        names.value = allSongs.value.map(s => s.songName)
       } catch (err) {
         console.log(err);
       }
@@ -162,7 +182,7 @@ export default {
       onUpdate,
       updateModal,
       songs: allSongs,
-      selectedNames: [],
+      selectedNames,
       selectedDates: [],
       names, 
       dates,

@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { showSongs, createSong, updateSong, deleteSong } from '../../controllers/song.js';
-import { showArtists, createArtist, updateArtist, deleteArtist } from '../../controllers/artist.js';
-import { showPlaylists, createPlaylist, updatePlaylist, deletePlaylist } from '../../controllers/playlist.js';
-import { showUsers, createUser, updateUser, deleteUser } from '../../controllers/user.js';
-import { showPlaylistsAndSongs, createPlaylistAndSong, deletePlaylistAndSong } from '../../controllers/playlistAndSong.js';
-import { showArtistsAndSongs, createArtistAndSong, deleteArtistAndSong } from '../../controllers/artistAndSong.js';
+import { showSongs, createSong, updateSong, deleteSong, showSongsByName } from '../../controllers/song.js';
+import { showArtists, createArtist, updateArtist, deleteArtist, showArtistsByName } from '../../controllers/artist.js';
+import { showPlaylists, createPlaylist, updatePlaylist, deletePlaylist, showPlaylistByName } from '../../controllers/playlist.js';
+import { showUsers, createUser, updateUser, deleteUser, showUserByEmail } from '../../controllers/user.js';
+import { showPlaylistsAndSongs, createPlaylistAndSong, deletePlaylistAndSong, showByPlaylistId } from '../../controllers/playlistAndSong.js';
+import { showArtistsAndSongs, createArtistAndSong, deleteArtistAndSong, showByArtistId } from '../../controllers/artistAndSong.js';
 
 const router = express.Router()
 
@@ -15,6 +15,13 @@ router.get('/api/playlists', showPlaylists)
 router.get('/api/users', showUsers)
 router.get('/api/playlistsAndSongs', showPlaylistsAndSongs)
 router.get('/api/artistsAndSongs', showArtistsAndSongs)
+
+router.get('/api/users/:userEmail', showUserByEmail);
+router.get('/api/songs/:songName', showSongsByName);
+router.get('/api/artists/:artistName', showArtistsByName);
+router.get('/api/playlists/:playlistName', showPlaylistByName);
+router.get('/api/playlistsAndSongs/:playListId', showByPlaylistId);
+router.get('/api/artistsAndSongs/:artistId', showByArtistId);
 
 router.post('/api/songs', createSong)
 router.post('/api/artists', createArtist)

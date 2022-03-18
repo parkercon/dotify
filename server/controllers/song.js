@@ -1,4 +1,4 @@
-import { getSongs, insertSong, updateSongById, deleteSongById } from '../models/songModel.js'
+import { getSongs, insertSong, updateSongById, deleteSongById, getSongsByName } from '../models/songModel.js'
 
 export const showSongs = (req, res) => {
     getSongs((err, results) => {
@@ -6,6 +6,17 @@ export const showSongs = (req, res) => {
             res.send(err);
         } else {
             console.log('results: ', results)
+            res.json(results);
+        }
+    });
+}
+
+export const showSongsByName = (req, res) => {
+    console.log('req:', req.params)
+    getSongsByName(req.params.songName, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
             res.json(results);
         }
     });

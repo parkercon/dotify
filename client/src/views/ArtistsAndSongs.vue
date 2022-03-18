@@ -1,10 +1,7 @@
 <template>
 <div style="margin-top: 10%; padding-bottom: 15vh">
     <b-container style="margin-top: 10%;">
-      <div>
-      <v-selectize v-model="selectedArtists" :options="artistsOnly" placeholder="Select Artist ID" multiple/>
-      <v-selectize v-model="selectedSongs" :options="songsOnly" placeholder="Select Song ID" multiple/>
-      </div>
+    <b-button @click="onShowModal" style="margin-top: 10px; margin-bottom: 10px" variant="success">Add Artist and Song Relationship</b-button>
     </b-container>
    <b-table striped hover :items="artistsAndSongs" :fields="fields">
      <template #cell(edit)="data">
@@ -30,7 +27,6 @@
   <b-button type="submit" variant="primary">Submit</b-button>
   </b-form>
   </b-modal>
-  <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Artist and Song Relationship</b-button>
 </div>
 </template>
 

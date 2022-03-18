@@ -13,6 +13,18 @@ export const getUsers = (result) => {
   });   
 }
 
+export const getUserByEmail = (email, result) => {
+    pool.query("SELECT * FROM users WHERE userEmail = ?", [email], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            console.log('results:', results)
+            result(null, results);
+        }
+    });   
+}
+
 export const insertUser = (data, result) => {
     pool.query("INSERT INTO users SET ?", [data], (err, results) => {
         if (err) {

@@ -12,6 +12,18 @@ export const getArtistsAndSongs = (result) => {
   });   
 }
 
+export const getByArtistId = (artistId, result) => {
+    pool.query("SELECT * FROM artistSongs WHERE artistId = ?", [artistId], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            console.log('results:', results)
+            result(null, results);
+        }
+    });   
+}
+
 export const insertArtistAndSong = (data, result) => {
     pool.query("INSERT INTO artistSongs SET ?", [data], (err, results) => {
         if (err) {

@@ -1,7 +1,8 @@
 <template>
 <div style="margin-top: 10%; padding-bottom: 15vh">
     <b-container style="margin-top: 10%;">
-      <v-selectize v-model="selectedArtists" :options="artistNames" placeholder="Select Artist Name" multiple/>
+    <b-button @click="onShowModal" style="margin-top: 10px; margin-bottom: 10px" variant="success">Add Artist</b-button>
+      <v-selectize v-model="selectedArtists" :options="artistNames" placeholder="Select Artist Name"/>
     </b-container>
    <b-table striped hover primary-key="artists.artistId" :items="artists" :fields="fields">
      <template #cell(edit)="data">
@@ -35,14 +36,12 @@
       <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-modal>
-    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Artist</b-button>
 </div>
 </template>
 
 <script>
-import mockData from '../data/mockData.json'
 import axios from "axios";
-import { ref, onMounted } from '@vue/composition-api'
+import { ref, onMounted, watch } from '@vue/composition-api'
 export default {
   name: 'Artists',
   setup () {
@@ -51,9 +50,28 @@ export default {
     const updateName = ref('')
     const updateModal = ref()
     const artistName = ref('')
-    const artistNames = mockData.Artists.map(a => a.artistName)
+    const artistNames = ref([])
     const allArtists = ref()
+    const selectedArtists = ref('')
     const updateMode = ref(false)
+
+    const getArtistByName = async() => {
+      try {
+        const response = await axios.get(
+          `/api/artists/${selectedArtists.value}`
+        )
+        allArtists.value = allArtists.value.filter(u => response.data.some(u2 => u.artistId == u2.artistId))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    watch(selectedArtists, () => {
+      getArtistByName()
+      if (selectedArtists.value == null) {
+        getArtists()
+      }
+    })
     const getArtists = async() => {
       try {
         const response = await axios.get("/api/artists");
@@ -62,6 +80,7 @@ export default {
       } catch (err) {
         console.log(err);
       }
+      artistNames.value = allArtists.value.map(a => a.artistName)
     }
     onMounted(() => {
       getArtists()
@@ -146,7 +165,7 @@ export default {
       updateId,
       updateName,
       onUpdateSubmit,
-      selectedArtists: [],
+      selectedArtists,
       artistNames,
       artists: allArtists,
       fields: [

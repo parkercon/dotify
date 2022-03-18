@@ -1,11 +1,8 @@
 <template>
 <div style="margin-top: 10%; padding-bottom: 15vh">
   <b-container style="margin-top: 10%;">
-      <v-selectize v-model="selectedPasswords" :options="passwords" placeholder="Select Passwords" multiple/>
-      <v-selectize v-model="selectedfNames" :options="fNames" placeholder="Select First Names" multiple/>
-      <v-selectize v-model="selectedlNames" :options="lNames" placeholder="Select Last Names" multiple/>
-      <v-selectize v-model="selectedBirthdays" :options="birthdays" placeholder="Select Birthdays" multiple/>
-      <v-selectize v-model="selectedEmails" :options="emails" placeholder="Select Emails" multiple/>
+    <b-button @click="onShowModal" style="margin-top: 10px; margin-bottom: 10px" variant="success">Add User</b-button>
+    <v-selectize v-model="selectedEmails" :options="emails" placeholder="Select Emails"/>
   </b-container>
    <b-table striped hover :items="users" :fields="fields">
      <template #cell(edit)="data">
@@ -83,14 +80,12 @@
       <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-modal>
-    <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add User</b-button>
 </div>
 </template>
 
 <script>
-import mockData from '../data/mockData.json'
 import axios from "axios";
-import { ref, onMounted } from '@vue/composition-api'
+import { ref, onMounted, watch } from '@vue/composition-api'
 export default {
   name: 'Users',
   setup () {
@@ -100,11 +95,7 @@ export default {
     const userlName = ref('')
     const userBirthday = ref('')
     const userEmail = ref('')
-    const passwords = mockData.Users.map(u => u.userPassword)
-    const fNames = mockData.Users.map(u => u.userfName)
-    const lNames = mockData.Users.map(u => u.userlName)
-    const birthdays = mockData.Users.map(u => u.userBirthday)
-    const emails = mockData.Users.map(u => u.userEmail)
+    const emails = ref([])
     const allUsers = ref()
 
     const updatefName = ref('')
@@ -114,11 +105,30 @@ export default {
     const updateEmail = ref()
     const updatePassword = ref()
     const updateId = ref()
+    const selectedEmails = ref('')
 
     const onUpdateSubmit = (e) => {
       e.preventDefault()
       updateUser()
     }
+
+    const getUserByEmail = async() => {
+      try {
+        const response = await axios.get(
+          `/api/users/${selectedEmails.value}`
+        )
+        allUsers.value = allUsers.value.filter(u => response.data.some(u2 => u.userId == u2.userId))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    watch(selectedEmails, () => {
+      getUserByEmail()
+      if (selectedEmails.value == null) {
+        getUsers()
+      }
+    })
 
     const updateUser = async() => {
       try {
@@ -159,6 +169,7 @@ export default {
           );
           allUsers.value[i].userBirthday = formattedDate
         }
+        emails.value = allUsers.value.map(u => u.userEmail)
       } catch (err) {
         console.log(err)
       }
@@ -224,15 +235,7 @@ export default {
       updateModal,
       onUpdate,
       users: allUsers,
-      selectedPasswords: [], 
-      selectedfNames: [],
-      selectedlNames: [],
-      selectedBirthdays: [],
-      selectedEmails: [],
-      passwords, 
-      fNames, 
-      lNames, 
-      birthdays, 
+      selectedEmails,
       emails,
       fields: [
         { key: "userId", label: "userId"},

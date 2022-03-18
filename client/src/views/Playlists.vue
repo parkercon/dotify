@@ -1,9 +1,8 @@
 <template>
 <div style="margin-top: 10%; padding-bottom: 15vh">
   <b-container style="margin-top: 10%;">
-    <v-selectize v-model="selectedNames" :options="playlistNames" placeholder="Select Playlist Name" multiple/>
-    <v-selectize v-model="selectedUserIds" :options="userIds" placeholder="Select User ID" multiple/>
-    <v-selectize v-model="selecteDates" :options="playlistDates" placeholder="Select Playlist Dates" multiple/>
+  <b-button @click="onShowModal" style="margin-top: 10px; margin-bottom: 10px" variant="success">Add Playlist</b-button>
+    <v-selectize v-model="selectedNames" :options="playlistNames" placeholder="Select Playlist Name"/>
   </b-container>
    <b-table striped hover :items="playlists" :fields="fields">
      <template #cell(edit)="data">
@@ -59,14 +58,13 @@
       <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-modal>
-  <b-button @click="onShowModal" style="margin-top: 10px;" variant="success">Add Playlist</b-button>
 </div>
 </template>
 
 <script>
 import mockData from '../data/mockData.json'
 import axios from "axios";
-import { ref, onMounted } from '@vue/composition-api'
+import { ref, onMounted, watch } from '@vue/composition-api'
 export default {
   name: 'Playlists',
   setup () {
@@ -74,7 +72,7 @@ export default {
     const playlistName = ref('')
     const userId = ref('')
     const playlistDate = ref('')
-    const playlistNames = mockData.Playlists.map(p => p.playlistName)
+    const selectedNames = ref([])
     const userIds = mockData.Playlists.map(p => p.userId)
     const playlistDates = mockData.Playlists.map(p => p.playlistDate)
     const allPlaylists = ref()
@@ -83,6 +81,26 @@ export default {
     const updateUserId = ref('')
     const updateDate = ref()
     const updateId = ref()
+    const playlistNames = ref([])
+
+    const getPlaylistsByName = async() => {
+      try {
+        const response = await axios.get(
+          `/api/playlists/${selectedNames.value}`
+        )
+        allPlaylists.value = allPlaylists.value.filter(u => response.data.some(u2 => u.playlistId == u2.playlistId))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    watch(selectedNames, () => {
+      getPlaylistsByName()
+      if (selectedNames.value == null) {
+        getPlaylists()
+      }
+    })
+
     const getPlaylists = async() => {
       try {
         const response = await axios.get("/api/playlists");
@@ -94,6 +112,7 @@ export default {
           );
           allPlaylists.value[i].playlistDate = formattedDate
         }
+        playlistNames.value = allPlaylists.value.map(p => p.playlistName)
       } catch (err) {
         console.log(err);
       }
@@ -173,7 +192,7 @@ export default {
       playlistName,
       PlaylistModal,
       playlists: allPlaylists,
-      selectedNames: [], 
+      selectedNames, 
       selectedUserIds: [],
       selecteDates: [],
       playlistNames, 

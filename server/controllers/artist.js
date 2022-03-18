@@ -1,4 +1,4 @@
-import { getArtists, insertArtist, updateArtistById, deleteArtistById } from '../models/artistModel.js'
+import { getArtists, insertArtist, updateArtistById, deleteArtistById, getArtistByName } from '../models/artistModel.js'
 
 export const showArtists = (req, res) => {
     getArtists((err, results) => {
@@ -6,6 +6,17 @@ export const showArtists = (req, res) => {
             res.send(err);
         } else {
             console.log('results: ', results)
+            res.json(results);
+        }
+    });
+}
+
+export const showArtistsByName = (req, res) => {
+    console.log('req:', req.params)
+    getArtistByName(req.params.artistName, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
             res.json(results);
         }
     });
@@ -21,6 +32,7 @@ export const createArtist = (req, res) => {
         }
     });
 }
+
 
 export const updateArtist = (req, res) => {
     const data = req.body;

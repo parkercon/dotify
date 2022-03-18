@@ -13,6 +13,18 @@ export const getSongs = (result) => {
     });
 }
 
+export const getSongsByName = (name, result) => {
+    pool.query("SELECT * FROM songs WHERE songName = ?", [name], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            console.log('results:', results)
+            result(null, results);
+        }
+    });   
+}
+
 // Insert a Song
 export const insertSong = (data, result) => {
     pool.query("INSERT INTO songs SET ?", [data], (err, results) => {
