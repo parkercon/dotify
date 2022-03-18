@@ -48,12 +48,12 @@ export const updateUserById = (data, id, result) => {
 }
 
 export const deleteUserById = (data, result) => {
-     pool.query("DELETE FROM users WHERE userid = ?", [data], (err, results) => {
-         if (err) {
-             console.log(err);
-             result(err, null);
-         } else {
-             result(null, results);
-         }
-     });
- }
+    pool.query("DELETE FROM users WHERE userid = ?", [data], (err, results) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });
+}
